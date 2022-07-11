@@ -45,19 +45,23 @@ const handleEvent = async (
     response.end();
     return;
   }
+  const feedChannel = process.env["FEED_CHANNEL"]!;
+  if (event.channel === feedChannel) {
+    console.log(`event.channel is feed channel ${event.channel}`);
+    response.end();
+    return;
+  }
   console.log("event handled", JSON.stringify(event));
-
   const web = new WebClient(process.env["TOKEN"]);
   const { permalink } = await web.chat.getPermalink({
     channel: event.channel,
     message_ts: event.ts,
   });
   console.log({ permalink });
-  //   const permalink = "";
-  //   await web.chat.postMessage({
-  //     channel: "suin_test",
-  //     text: `<${permalink}|\u{200B}>`,
-  //     unfurl_links: true,
-  //   });
+  await web.chat.postMessage({
+    channel: feedChannel,
+    text: `<${permalink}|\u{200B}>`,
+    unfurl_links: true,
+  });
   response.status(200).send("OK");
 };
