@@ -40,9 +40,22 @@
   - チャネル名は任意。例: times_feed
 - そのチャネルに上で作ったボットユーザーを招待する
   - 上で設定したボット名(例: `@分報フィード`)でメンションすると招待できる。
+- チャネルのIDを控える
+  - チャネルのヘッダの「#times_feed ⌄」をクリックして「チャンネル情報」を表示する。
+  - そこに「チャンネルID」が表示されているのでコピーして控えておく。
+    - `C03XXXXXXX`のようなID
 
 ### このプログラムをVercelにデプロイする
 
 このプログラムをVercelにデプロイしてください。
 
+- Vercelの環境設定で下記の値をセットする
+  - FEED_CHANNEL: 上で控えた「チャンネルID」。`C03XXXXXXX`のようなID
+  - TOKEN: 上で控えた「Bot User OAuth Token」。`xoxb-12345678-...`のようなトークン
+
+### ボットがメッセージを受信できるようにする
+
+- 「Event Subscriptions」を開き、「Enable Events」を「On」にする。
+- 「Request URL」にVercelのURLを入れる
+  - `https://$project_name.vercel.app/api/postFeed`のようなURL
 
