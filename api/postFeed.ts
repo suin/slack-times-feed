@@ -9,6 +9,9 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     return urlVerification(request, response);
   }
 
+  if (body.type === "event_callback") {
+    return handleEvent(request, response);
+  }
   response.status(200).end();
 };
 
@@ -24,4 +27,21 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
 const urlVerification = (request: VercelRequest, response: VercelResponse) => {
   response.status(200).send({ challenge: request.body.challenge });
+};
+
+const handleEvent = (request: VercelRequest, response: VercelResponse) => {
+  const { body } = request;
+  const { event } = body;
+  if (event.type !== "message") {
+    console.log("event.type is not message");
+    response.end();
+    return;
+  }
+  if (typeof event.subtype === "string") {
+    console.log(`event.subtype is ${event.subtype}`);
+    response.end();
+    return;
+  }
+  console.log("event handled", event);
+  response.status(200).send("OK");
 };
