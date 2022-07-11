@@ -42,6 +42,6 @@ const handleEvent = (request: VercelRequest, response: VercelResponse) => {
     response.end();
     return;
   }
-  console.log("event handled", event);
+  console.log("event handled", JSON.stringify(event));
   response.status(200).send("OK");
 };
