@@ -1,0 +1,35 @@
+{
+  "version": "0.0.0-development",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "suin",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "files": [
+    "**/*.{js,ts,map}",
+    "!*.{test,spec}.*",
+    "!testUtils.*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16.9"
+  },
+  "name": "@suin/slack-times-feed",
+  "packageManager": "yarn@1.22.18",
+  "devDependencies": {
+    "@suin/tsconfig": "^0.0.0",
+    "@vercel/node": "^2.4.1",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}
