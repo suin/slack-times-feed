@@ -53,9 +53,20 @@
   - FEED_CHANNEL: 上で控えた「チャンネルID」。`C03XXXXXXX`のようなID
   - TOKEN: 上で控えた「Bot User OAuth Token」。`xoxb-12345678-...`のようなトークン
 
+環境変数をセットしたら、再度デプロイして、環境変数を効かせる必要があります。
+
 ### ボットがメッセージを受信できるようにする
 
 - 「Event Subscriptions」を開き、「Enable Events」を「On」にする。
 - 「Request URL」にVercelのURLを入れる
   - `https://$project_name.vercel.app/api/postFeed`のようなURL
+- URLを入れると「Verified」と表示され、フィードチャネルにテストメッセージがボットから投稿される。
+- 「Subscribe to bot events」の「Add Bot User Event」をクリックし、次のイベントを追加する。
+  - `message.channels`
+- 「Save Changes」ボタンを押して保存する。
+
+### ボットを各分報チャネルに招待する
+
+ボットが新規メッセージに気づくには、それぞれのチャネルに参加している必要があります。なので面倒ですが、各分報チャンネルにボットを招待しておきます。招待するには、分報チャンネルで「@分報フィード」のようにメンションすることで招待できます。
+
 
