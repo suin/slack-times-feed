@@ -35,11 +35,13 @@ const handleEvent = async (
   const { event } = body;
   if (event.type !== "message") {
     console.log("event.type is not message");
+    console.dir(event, { depth: Infinity });
     response.end();
     return;
   }
   if (typeof event.subtype === "string") {
     console.log(`event.subtype is ${event.subtype}`);
+    console.dir(event, { depth: Infinity });
     response.end();
     return;
   }
@@ -48,7 +50,8 @@ const handleEvent = async (
     response.end();
     return;
   }
-  console.log("feeding a message", event);
+  console.log("feeding a message");
+  console.dir(event, { depth: Infinity });
   const { permalink } = await web.chat.getPermalink({
     channel: event.channel,
     message_ts: event.ts,
