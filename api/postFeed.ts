@@ -39,7 +39,7 @@ const handleEvent = async (
     response.end();
     return;
   }
-  if (typeof event.subtype === "string") {
+  if (isFeedableMessage(event)) {
     console.log(`event.subtype is ${event.subtype}`);
     console.dir(event, { depth: Infinity });
     response.end();
@@ -63,4 +63,14 @@ const handleEvent = async (
     unfurl_links: true,
   });
   response.status(200).send("OK");
+};
+
+const isFeedableMessage = ({ subtype }: any): boolean => {
+  if (typeof subtype !== "string") {
+    return true;
+  }
+  if (subtype === "file_share") {
+    return true;
+  }
+  return false;
 };
