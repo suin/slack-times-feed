@@ -39,7 +39,7 @@ const handleEvent = async (
     response.end();
     return;
   }
-  if (isFeedableMessage(event)) {
+  if (!isFeedableMessage(event)) {
     console.log(`event.subtype is ${event.subtype}`);
     console.dir(event, { depth: Infinity });
     response.end();
