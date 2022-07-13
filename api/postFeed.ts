@@ -35,11 +35,13 @@ const handleEvent = async (
   const { event } = body;
   if (event.type !== "message") {
     console.log("event.type is not message");
+    console.dir(event, { depth: Infinity });
     response.end();
     return;
   }
-  if (typeof event.subtype === "string") {
+  if (!isFeedableMessage(event)) {
     console.log(`event.subtype is ${event.subtype}`);
+    console.dir(event, { depth: Infinity });
     response.end();
     return;
   }
@@ -48,7 +50,8 @@ const handleEvent = async (
     response.end();
     return;
   }
-  console.log("feeding a message", event);
+  console.log("feeding a message");
+  console.dir(event, { depth: Infinity });
   const { permalink } = await web.chat.getPermalink({
     channel: event.channel,
     message_ts: event.ts,
@@ -56,8 +59,18 @@ const handleEvent = async (
   console.log({ permalink });
   await web.chat.postMessage({
     channel: feedChannel,
-    text: `<${permalink}|\u{200B}>`,
+    text: `<${permalink}|source>`,
     unfurl_links: true,
   });
   response.status(200).send("OK");
+};
+
+const isFeedableMessage = ({ subtype }: any): boolean => {
+  if (typeof subtype !== "string") {
+    return true;
+  }
+  if (subtype === "file_share") {
+    return true;
+  }
+  return false;
 };
