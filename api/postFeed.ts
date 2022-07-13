@@ -59,7 +59,7 @@ const handleEvent = async (
   console.log({ permalink });
   await web.chat.postMessage({
     channel: feedChannel,
-    text: `<${permalink}|発言元>`,
+    text: `<${permalink}|source>`,
     unfurl_links: true,
   });
   response.status(200).send("OK");
