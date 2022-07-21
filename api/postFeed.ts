@@ -50,6 +50,12 @@ const handleEvent = async (
     response.end();
     return;
   }
+  if (textStartsWithOnion(event)) {
+    console.log("text starts with onion🧅");
+    console.dir(event, { depth: Infinity });
+    response.end();
+    return;
+  }
   console.log("feeding a message");
   console.dir(event, { depth: Infinity });
   const { permalink } = await web.chat.getPermalink({
@@ -73,4 +79,11 @@ const isFeedableMessage = ({ subtype }: any): boolean => {
     return true;
   }
   return false;
+};
+
+const textStartsWithOnion = ({ text }: any): boolean => {
+  if (typeof text !== "string") {
+    return false;
+  }
+  return text.startsWith(":onion:");
 };
